@@ -2,8 +2,10 @@ import './App.css';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// For Auth from https://firebase.google.com/docs/auth/web/google-signin?authuser=0
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -19,15 +21,47 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// might not need this
+// const analytics = getAnalytics(app);
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
+auth.useDeviceLanguage();
+
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+    console.log(errorCode, errorMessage, credential)
+  });
+  
+  signOut(auth).then(() => {
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+  });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      <h1>Welcome to Hermes!</h1>
+    <div className="w-full h-[100vh] flex flex-col items-center justify-center">
+      <header className="bg-black p-3">
+      <h1 className='text-3xl text-bold text-white'>Welcome to Hermes!</h1>
       </header>
       <p>What would you like to convey?</p>
+      <button className='bg-red-500 p-3 drop-shadow-md hover:bg-red-300 m-5'onClick={()=> signInWithPopup()}>Sign in</button>
     </div>
   );
 }
