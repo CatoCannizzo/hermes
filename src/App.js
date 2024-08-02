@@ -1,5 +1,17 @@
 import './App.css';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+
+import {useAuthState} from 'react-firebase-hooks/auth'
+import { useCollectionData} from 'react-firebase-hooks/firestore'
+
+firebase.initializeApp({
+
+})
+
+const auth = firebase.auth();
+const firestore = firebase.firestore();
 
 function App() {
   return (
