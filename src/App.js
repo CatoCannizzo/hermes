@@ -1,11 +1,4 @@
 import './App.css';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
-
-import {useAuthState} from 'react-firebase-hooks/auth'
-import { useCollectionData} from 'react-firebase-hooks/firestore'
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -20,23 +13,21 @@ const firebaseConfig = {
   projectId: "hermes-a5761",
   storageBucket: "hermes-a5761.appspot.com",
   messagingSenderId: "558191983139",
-  appId: "1:558191983139:web:71d60a47604907ddaecf96",
-  measurementId: "G-ZGJ3MM5TH5"
+  appId: "1:558191983139:web:bf8fabaf7452fd97aecf96",
+  measurementId: "G-28HMN6V5R6"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
-
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-
+      <h1>Welcome to Hermes!</h1>
       </header>
+      <p>What would you like to convey?</p>
     </div>
   );
 }
